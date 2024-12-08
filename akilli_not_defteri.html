@@ -7,7 +7,6 @@
   <title>📝 Akıllı Not Defteri</title>
   
   <style>
-    /* Genel Reset */
     * {
       margin: 0;
       padding: 0;
@@ -24,7 +23,6 @@
       min-height: 100vh;
     }
 
-    /* Header */
     header {
       width: 100%;
       background: #555;
@@ -48,7 +46,7 @@
       border-radius: 5px;
     }
 
-    /* Sağ Menü */
+
     .right-container {
       flex: 1;
       padding: 15px;
@@ -60,7 +58,6 @@
       font-size: 14px;
     }
 
-    /* Sol Alan */
     .left-container {
       flex: 3;
       padding: 20px;
@@ -80,7 +77,6 @@
       width: 100%;
     }
 
-    /* Responsive Düzeni */
     @media (max-width: 768px) {
       /* Küçük ekranlarda alt alta sıralama */
       .container {
@@ -125,7 +121,6 @@
       }
     }
 
-    /* CSS Not Alanı */
     .note {
       background: white;
       border: 1px solid #aaa;
@@ -147,7 +142,6 @@
       transform: scale(1.1);
     }
 	
-	 /* Sağ Menü Alanı */
     #searchInput,
     #backgroundColorPicker {
       width: 100%;
@@ -159,15 +153,13 @@
 </head>
 
 <body>
-  <!-- Header -->
   <header>
     <h1>📝 Akıllı Not Defteri</h1>
     <input type="text" id="noteInput" placeholder="Yeni not oluştur ve Enter'a bas!">
   </header>
 
-  <!-- Ana Alan -->
   <div class="container" style="display: flex; flex: 1;">
-    <!-- Sağ Menü Alanı -->
+
     <div class="right-container">
       <h3>Ayarlar</h3>
       <input type="text" id="searchInput" placeholder="Notları ara...">
@@ -177,7 +169,6 @@
       </div>
     </div>
 
-    <!-- Sol Alan -->
     <div class="left-container">
       <div class="notes-container" id="notesContainer"></div>
     </div>
