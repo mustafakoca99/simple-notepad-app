@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📝 Akıllı Not Defteri</title>
+  
+  <style>
+    /* Genel Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Temel Görünüm */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      width: 100%;
+      background: #555;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      font-size: 20px;
+      margin: 5px 0;
+    }
+
+    #noteInput {
+      margin: 10px auto;
+      padding: 8px;
+      width: 90%;
+      max-width: 400px;
+      border: 1px solid #555;
+      border-radius: 5px;
+    }
+
+    /* Sağ Menü */
+    .right-container {
+      flex: 1;
+      padding: 15px;
+      background: #e0e0e0;
+      border-left: 2px solid #555;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      font-size: 14px;
+    }
+
+    /* Sol Alan */
+    .left-container {
+      flex: 3;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      overflow-y: auto;
+      width: 100%;
+    }
+
+    .notes-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    /* Responsive Düzeni */
+    @media (max-width: 768px) {
+      /* Küçük ekranlarda alt alta sıralama */
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .right-container {
+        flex: none;
+        width: 100%;
+        border-left: none;
+        border-bottom: 2px solid #555;
+      }
+
+      .left-container {
+        flex: none;
+        width: 100%;
+      }
+
+      header {
+        font-size: 18px;
+      }
+
+      #noteInput {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 16px;
+      }
+
+      #noteInput {
+        padding: 6px;
+      }
+
+      .note {
+        font-size: 10px;
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    /* CSS Not Alanı */
+    .note {
+      background: white;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .note:hover {
+      transform: scale(1.1);
+    }
+	
+	 /* Sağ Menü Alanı */
+    #searchInput,
+    #backgroundColorPicker {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #555;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <h1>📝 Akıllı Not Defteri</h1>
+    <input type="text" id="noteInput" placeholder="Yeni not oluştur ve Enter'a bas!">
+  </header>
+
+  <!-- Ana Alan -->
+  <div class="container" style="display: flex; flex: 1;">
+    <!-- Sağ Menü Alanı -->
+    <div class="right-container">
+      <h3>Ayarlar</h3>
+      <input type="text" id="searchInput" placeholder="Notları ara...">
+      <div class="background-selector-container" style="display:flex;">
+        <label for="backgroundColorPicker">Arka Plan:</label>
+        <input type="color" id="backgroundColorPicker" value="#ffffff">
+      </div>
+    </div>
+
+    <!-- Sol Alan -->
+    <div class="left-container">
+      <div class="notes-container" id="notesContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    const noteInput = document.getElementById("noteInput");
+    const notesContainer = document.getElementById("notesContainer");
+    const searchInput = document.getElementById("searchInput");
+    const backgroundColorPicker = document.getElementById("backgroundColorPicker");
+
+    noteInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter" && noteInput.value.trim() !== "") {
+        addNote(noteInput.value);
+        noteInput.value = "";
+      }
+    });
+
+    function addNote(content) {
+      const noteElement = document.createElement("div");
+      noteElement.classList.add("note");
+      noteElement.innerText = content;
+
+      noteElement.onclick = function () {
+        if (confirm("Bu notu silmek ister misin?")) noteElement.remove();
+      };
+
+      notesContainer.appendChild(noteElement);
+    }
+
+    searchInput.addEventListener("input", () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      document.querySelectorAll(".note").forEach(note => {
+        if (note.innerText.toLowerCase().includes(searchTerm)) {
+          note.style.display = "flex";
+        } else {
+          note.style.display = "none";
+        }
+      });
+    });
+
+    backgroundColorPicker.addEventListener("input", () => {
+      document.body.style.backgroundColor = backgroundColorPicker.value;
+    });
+  </script>
+</body>
+
+</html>
